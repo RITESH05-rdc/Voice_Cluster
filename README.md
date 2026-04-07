@@ -50,4 +50,4 @@ See `requirements.txt` for the full list. Major packages include:
 - For best results, use high-quality audio files.
 
 ## License
-Specify your license here.
+RDC.
