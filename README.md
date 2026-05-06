@@ -64,4 +64,4 @@ The backend exposes:
 - The root `main.py` continues to work as a local pipeline entrypoint.
 
 ## License
-Specify your license here.
+RDC.
