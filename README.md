@@ -1,20 +1,21 @@
 # Voice Cluster
 
-Voice Cluster is a Python project for speaker clustering using audio data. It includes modules for preprocessing audio, extracting embeddings, and clustering speakers. The project is organized for easy experimentation and extension.
+Voice Cluster is a Python project for speaker clustering using audio data. It includes modules for preprocessing audio, extracting embeddings, and clustering speakers.
 
 ## Project Structure
 
-- `main.py` — Main entry point for running the pipeline.
+- `main.py` — Main entry point for running the pipeline locally.
+- `backend/` — FastAPI service wrapping the speaker clustering pipeline.
+- `frontend/` — TypeScript React UI for uploading audio and viewing cluster results.
 - `clustering/cluster_speakers.py` — Speaker clustering logic.
 - `embedding/extract_embedding.py` — Audio embedding extraction.
 - `preprocessing/preprocess_audio.py` — Audio preprocessing utilities.
 - `data/audio/` — Directory for storing audio files.
 - `voice_env/` — Python virtual environment (do not edit directly).
 
-## Setup
+## Backend Setup
 
-1. **Clone the repository** and navigate to the project directory.
-2. **Create and activate a virtual environment** (optional, recommended):
+1. Create and activate a Python environment.
    ```bash
    python -m venv voice_env
    # On Windows:
@@ -22,32 +23,45 @@ Voice Cluster is a Python project for speaker clustering using audio data. It in
    # On Unix or MacOS:
    source voice_env/bin/activate
    ```
-3. **Install dependencies:**
+2. Install backend dependencies:
    ```bash
-   pip install -r requirements.txt
+   pip install -r backend/requirements.txt
    ```
+3. Start the API:
+   ```bash
+   uvicorn backend.api:app --reload
+   ```
+
+The backend exposes:
+- `GET /health`
+- `GET /files`
+- `POST /upload`
+- `POST /cluster`
+
+## Frontend Setup
+
+1. Install Node.js dependencies from the frontend folder.
+   ```bash
+   cd frontend
+   npm install
+   ```
+2. Start the UI app.
+   ```bash
+   npm run dev
+   ```
+3. Open the local Vite URL (usually `http://localhost:5173`).
 
 ## Usage
 
-1. Place your audio files in the `data/audio/` directory.
-2. Run the main script:
-   ```bash
-   python main.py
-   ```
-
-## Dependencies
-See `requirements.txt` for the full list. Major packages include:
-- numpy
-- scipy
-- librosa
-- soundfile
-- scikit-learn
-- torch
-- flask (if using web features)
+1. Upload audio or MP4 files from the frontend UI.
+2. Run clustering from the UI.
+3. View the grouped cluster results in the browser.
 
 ## Notes
-- The `voice_env/` folder contains the virtual environment and should not be modified manually.
-- For best results, use high-quality audio files.
+
+- The frontend and backend are intentionally separate for easier integration.
+- The backend stores uploaded audio in `data/audio/` and clusters all supported files.
+- The root `main.py` continues to work as a local pipeline entrypoint.
 
 ## License
 Specify your license here.
