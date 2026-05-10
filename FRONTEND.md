@@ -50,6 +50,44 @@ Output:
 ### Access the App
 Open browser to `http://localhost:5173`
 
+### Backend URL
+The frontend talks to the backend through `VITE_API_URL`.
+
+If you start the FastAPI backend with the default command from `README.md`:
+
+```bash
+uvicorn backend.api:app --reload
+```
+
+then the frontend can use the default `http://localhost:8000`.
+
+Important: make sure port `8000` is running the **Voice Cluster** backend
+(`backend.api:app`), not another project. If some other FastAPI app is already
+using port `8000` (for example the separate `voice-embeddings` project), the
+frontend will reach the wrong service and `/files` and `/upload` will return
+404.
+
+To start the correct backend from the `Voice_Cluster` root:
+
+```bash
+uvicorn backend.api:app --host 0.0.0.0 --port 8000 --reload
+```
+
+Then verify it directly:
+
+```bash
+curl http://localhost:8000/health
+curl http://localhost:8000/files
+```
+
+If your backend is running on a different port or host, create `.env.local` in `frontend/`:
+
+```bash
+VITE_API_URL=http://localhost:8000
+```
+
+The frontend API client in `src/api.ts` reads this variable and falls back to `http://localhost:8000`.
+
 ### Features During Development
 - **Hot Module Replacement (HMR)** — Changes auto-reload
 - **TypeScript Checking** — Real-time validation

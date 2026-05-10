@@ -10,7 +10,7 @@ from clustering.cluster_speakers import cluster_embeddings
 
 
 def allowed_extensions() -> List[str]:
-    return [".wav", ".mp4", ".mp3", ".flac", ".ogg"]
+    return [".wav", ".mp4", ".mp3", ".flac", ".ogg", ".m4a"]
 
 
 def get_audio_files(folder: Path) -> List[str]:

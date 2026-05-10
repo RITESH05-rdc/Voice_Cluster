@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8000'
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
 export async function fetchFiles() {
   const response = await fetch(`${BASE_URL}/files`)
@@ -18,7 +18,8 @@ export async function uploadFiles(files: FileList) {
   })
   
   if (!response.ok) {
-    throw new Error(`Upload failed: ${response.statusText}`)
+    const errorData = await response.json().catch(() => ({ detail: response.statusText }))
+    throw new Error(`Upload failed: ${errorData.detail || response.statusText}`)
   }
   return response.json()
 }
